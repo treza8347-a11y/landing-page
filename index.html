@@ -26,18 +26,17 @@ formData.append("nom", document.getElementById("nom").value);
 formData.append("email", document.getElementById("email").value);
 formData.append("telephone", document.getElementById("telephone").value);
 
-fetch("https://hooks.zapier.com/hooks/catch/26582458/u0wuaju/", {
+fetch("/api/lead", {
 method: "POST",
-body: formData
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+nom: document.getElementById("nom").value,
+email: document.getElementById("email").value,
+telephone: document.getElementById("telephone").value
 })
-.then(() => {
-document.getElementById("message").innerText = "Merci ! Votre demande a été envoyée.";
-document.getElementById("form").reset();
 })
-.catch(() => {
-document.getElementById("message").innerText = "Erreur d'envoi.";
-});
-});
 </script>
 
 </body>
