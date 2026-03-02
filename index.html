@@ -17,32 +17,24 @@
 </form>
 
 <p id="message" style="color:green;"></p>
-
 <script>
 document.getElementById("form").addEventListener("submit", function(e) {
 e.preventDefault();
 
+const formData = new FormData();
+formData.append("nom", document.getElementById("nom").value);
+formData.append("email", document.getElementById("email").value);
+formData.append("telephone", document.getElementById("telephone").value);
+
 fetch("https://hooks.zapier.com/hooks/catch/26582458/u0wuaju/", {
 method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({
-nom: document.getElementById("nom").value,
-email: document.getElementById("email").value,
-telephone: document.getElementById("telephone").value
+body: formData
 })
-})
-.then(response => {
-if (response.ok) {
+.then(() => {
 document.getElementById("message").innerText = "Merci ! Votre demande a été envoyée.";
 document.getElementById("form").reset();
-} else {
-throw new Error("Network response was not ok");
-}
 })
-.catch(error => {
-console.error("Erreur:", error);
+.catch(() => {
 document.getElementById("message").innerText = "Erreur d'envoi.";
 });
 });
