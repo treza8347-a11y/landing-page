@@ -24,18 +24,25 @@ e.preventDefault();
 
 fetch("https://hooks.zapier.com/hooks/catch/26582458/u0wuaju/", {
 method: "POST",
-headers: { "Content-Type": "application/json" },
+headers: {
+"Content-Type": "application/json"
+},
 body: JSON.stringify({
 nom: document.getElementById("nom").value,
 email: document.getElementById("email").value,
 telephone: document.getElementById("telephone").value
 })
 })
-.then(function() {
+.then(response => {
+if (response.ok) {
 document.getElementById("message").innerText = "Merci ! Votre demande a été envoyée.";
 document.getElementById("form").reset();
+} else {
+throw new Error("Network response was not ok");
+}
 })
-.catch(function(error) {
+.catch(error => {
+console.error("Erreur:", error);
 document.getElementById("message").innerText = "Erreur d'envoi.";
 });
 });
