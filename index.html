@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Création Landing Page Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f4f6f9;color:#222;text-align:center;padding:40px;}
+h1{font-size:36px;margin-bottom:20px;}
+p{margin-bottom:40px;}
+form{max-width:500px;margin:auto;background:white;padding:40px;border-radius:15px;box-shadow:0 15px 40px rgba(0,0,0,0.1);}
+input,textarea{width:100%;padding:15px;margin:10px 0;border-radius:10px;border:1px solid #ddd;}
+button{padding:15px;width:100%;background:#0f2027;color:white;border:none;border-radius:50px;font-weight:700;cursor:pointer;}
+button:hover{background:#203a43;}
+.success{display:none;margin-top:20px;color:green;font-weight:600;}
+</style>
+</head>
+
+<body>
+
+<h1>🚀 Création Landing Page Premium</h1>
+<p>Obtenez une landing page stratégique optimisée conversion et prête pour la publicité.</p>
+
+<form id="leadForm">
+<input type="text" name="nom" placeholder="Nom complet" required>
+<input type="email" name="email" placeholder="Email professionnel" required>
+<input type="tel" name="telephone" placeholder="Téléphone" required>
+<textarea name="objectif" placeholder="Décrivez votre objectif"></textarea>
+<button type="submit">Envoyer ma demande</button>
+</form>
+
+<div class="success" id="successMessage">
+Merci ✅ Votre demande a été envoyée avec succès.
+</div>
+
+<script>
+document.getElementById("leadForm").addEventListener("submit", function(e){
+e.preventDefault();
+
+fetch("https://hooks.zapier.com/hooks/catch/26582458/u0av9nt/", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+nom: this.nom.value,
+email: this.email.value,
+telephone: this.telephone.value,
+objectif: this.objectif.value
+})
+})
+.then(response => {
+document.getElementById("successMessage").style.display = "block";
+this.reset();
+});
+});
+</script>
+
+</body>
+</html>
