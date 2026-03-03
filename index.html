@@ -1,42 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Landing Page Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Création Landing Page Premium</title>
+<style>
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+.container{
+background:white;
+color:#333;
+padding:40px;
+border-radius:15px;
+width:350px;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
+h2{text-align:center;margin-bottom:20px;}
+input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+button{
+width:100%;
+padding:12px;
+background:#2c5364;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+button:hover{background:#203a43;}
+.success{color:green;text-align:center;margin-top:10px;}
+</style>
 </head>
-<body style="font-family: Arial; text-align:center; padding:50px;">
+<body>
 
-<h1>Création Landing Page Premium</h1>
-<p>Recevez une landing page optimisée conversion.</p>
+<div class="container">
+<h2>Obtenez Votre Landing Page Premium</h2>
 
-<form id="form">
-<input type="text" id="nom" placeholder="Nom" required><br><br>
-<input type="email" id="email" placeholder="Email" required><br><br>
-<input type="tel" id="telephone" placeholder="Téléphone"><br><br>
-<button type="submit">Envoyer</button>
+<form id="leadForm">
+<input type="text" id="nom" placeholder="Nom complet" required>
+<input type="email" id="email" placeholder="Email" required>
+<input type="text" id="telephone" placeholder="Téléphone" required>
+<input type="text" id="pays" placeholder="Pays" required>
+<button type="submit">Demander un devis</button>
 </form>
 
-<p id="message" style="color:green;"></p>
+<p class="success" id="message"></p>
+
+</div>
+
 <script>
-document.getElementById("form").addEventListener("submit", function(e) {
+document.getElementById("leadForm").addEventListener("submit", async function(e){
 e.preventDefault();
 
-const formData = new FormData();
-formData.append("nom", document.getElementById("nom").value);
-formData.append("email", document.getElementById("email").value);
-formData.append("telephone", document.getElementById("telephone").value);
-
-fetch("/api/lead", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({
+const data = {
 nom: document.getElementById("nom").value,
 email: document.getElementById("email").value,
-telephone: document.getElementById("telephone").value
-})
-})
+telephone: document.getElementById("telephone").value,
+pays: document.getElementById("pays").value
+};
+
+try{
+const response = await fetch("/api/lead",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify(data)
+});
+
+if(response.ok){
+document.getElementById("message").innerText="Demande envoyée avec succès !";
+}else{
+document.getElementById("message").innerText="Erreur d'envoi.";
+}
+
+}catch(error){
+document.getElementById("message").innerText="Erreur serveur.";
+}
+});
 </script>
 
 </body>
